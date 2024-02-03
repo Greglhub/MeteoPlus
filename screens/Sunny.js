@@ -1,3 +1,4 @@
+<<<<<<< Updated upstream
 import React, { useState, useEffect } from "react";
 import { Text, StyleSheet, View, Image } from "react-native";
 import NiceCardContainer from "../components/NiceCardContainer";
@@ -52,11 +53,32 @@ const Sunny = () => {
         />
       </View >
 
+=======
+import * as React from "react";
+import { Text, StyleSheet, View } from "react-native";
+import { Image } from "expo-image";
+import NiceCardContainer from "../components/NiceCardContainer";
+import Component4Icon from "../components/Component4Icon";
+import { Color, FontSize, FontFamily, Border } from "../GlobalStyles";
+
+const Sunny = () => {
+  return (
+    <View style={styles.sunny}>
+      <Text style={styles.nice}>Nice</Text>
+      <View style={[styles.sunnyChild, styles.sunnyPosition1]} />
+      <View style={[styles.sunnyItem, styles.sunnyPosition]} />
+      <Image
+        style={styles.iconactionsearch24px}
+        contentFit="cover"
+        source={require("../assets/iconactionsearch-24px1.png")}
+      />
+>>>>>>> Stashed changes
       <Image
         style={[styles.groupIcon, styles.iconLayout]}
         contentFit="cover"
         source={require("../assets/group3.png")}
       />
+<<<<<<< Updated upstream
 
       <NiceCardContainer quantity={weatherData?.main?.temp} propTop={360} />
       <Text style={[styles.time, styles.fTypo]}>Lever </Text>
@@ -76,6 +98,20 @@ const Sunny = () => {
       <Text style={[styles.text2, styles.fPosition]}>
        {convertToFahrenheit(weatherData?.main?.temp)}°F
       </Text>
+=======
+      <Image
+        style={[styles.vectorIcon, styles.iconLayout]}
+        contentFit="cover"
+        source={require("../assets/vector9.png")}
+      />
+      <NiceCardContainer quantity="25" propTop={360} />
+      <Text style={[styles.time, styles.fTypo]}>TIME</Text>
+      <Text style={styles.searchLocation}>Search Location</Text>
+      <Text style={[styles.am, styles.textTypo]}>11:25 AM</Text>
+      <Text style={[styles.text, styles.textTypo]}>4</Text>
+      <Text style={[styles.text1, styles.textTypo]}>58%</Text>
+      <Text style={[styles.text2, styles.fPosition]}>22</Text>
+>>>>>>> Stashed changes
       <Text style={[styles.uv, styles.fTypo]}>UV</Text>
       <Text style={[styles.rain, styles.fTypo]}>% RAIN</Text>
       <Text style={[styles.f, styles.fTypo]}>F°</Text>
@@ -84,6 +120,7 @@ const Sunny = () => {
   );
 };
 
+<<<<<<< Updated upstream
 
 const styles = StyleSheet.create({
   searchBar: {
@@ -93,6 +130,13 @@ const styles = StyleSheet.create({
   sunnyPosition: {
     width: 360,
     backgroundColor: Color.colorGray_100,
+=======
+const styles = StyleSheet.create({
+  sunnyPosition: {
+    width: 360,
+    backgroundColor: Color.colorGray_100,
+    left: 24,
+>>>>>>> Stashed changes
     position: "absolute",
   },
   sunnyPosition1: {
@@ -100,13 +144,21 @@ const styles = StyleSheet.create({
     backgroundColor: Color.colorGray_100,
     left: 24,
     position: "absolute",
+<<<<<<< Updated upstream
     top: 600,
+=======
+    top:600,
+>>>>>>> Stashed changes
   },
   iconLayout: {
     maxHeight: "100%",
     maxWidth: "100%",
     position: "absolute",
     overflow: "hidden",
+<<<<<<< Updated upstream
+=======
+    
+>>>>>>> Stashed changes
   },
   fTypo: {
     textAlign: "left",
@@ -135,14 +187,31 @@ const styles = StyleSheet.create({
     top: 625,
   },
   nice: {
+<<<<<<< Updated upstream
+=======
+    top: 400,
+    left: 180,
+>>>>>>> Stashed changes
     fontSize: FontSize.size_11xl,
     fontWeight: "500",
     fontFamily: FontFamily.poppinsSemiBold,
     color: Color.colorGray_200,
+<<<<<<< Updated upstream
     height: 100,
     textAlign: "center",
 
 
+=======
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    width: 77,
+    height: 100,
+    textAlign: "center",
+    position: "absolute",
+
+    
+>>>>>>> Stashed changes
   },
   sunnyChild: {
     top: 465,
@@ -154,14 +223,21 @@ const styles = StyleSheet.create({
     top: 80,
     borderRadius: Border.br_mini,
     height: 46,
+<<<<<<< Updated upstream
 
+=======
+    
+>>>>>>> Stashed changes
   },
   iconactionsearch24px: {
     width: 17,
     height: 17,
+<<<<<<< Updated upstream
     position: 'absolute',
     right: '5%',
     top: '30%'
+=======
+>>>>>>> Stashed changes
   },
   groupIcon: {
     height: "15.15%",
@@ -172,17 +248,31 @@ const styles = StyleSheet.create({
     left: "33.6%",
   },
   vectorIcon: {
+<<<<<<< Updated upstream
     top: "10%",
     right: '-8%'
   },
   time: {
     left: 60,
 
+=======
+    height: "2.59%",
+    width: "5.6%",
+    top: "43%",
+    right: "31.2%",
+    bottom: "58.01%",
+    left: "60.2%",
+  },
+  time: {
+    left: 60,
+    
+>>>>>>> Stashed changes
     fontFamily: FontFamily.poppinsMedium,
     fontWeight: "500",
     position: "absolute",
   },
   searchLocation: {
+<<<<<<< Updated upstream
     fontFamily: FontFamily.poppinsRegular,
     fontSize: FontSize.size_mini,
     textAlign: "left",
@@ -201,6 +291,18 @@ const styles = StyleSheet.create({
   },
   amm: {
     left: 140,
+=======
+    top: 92,
+    fontFamily: FontFamily.poppinsRegular,
+    fontSize: FontSize.size_mini,
+    left: 44,
+    textAlign: "left",
+    color: Color.colorSilver,
+    position: "absolute",
+  },
+  am: {
+    left: 44,
+>>>>>>> Stashed changes
     color: Color.colorDarkgray,
     top: 491,
     fontFamily: FontFamily.poppinsMedium,
@@ -247,13 +349,17 @@ const styles = StyleSheet.create({
     backgroundColor: Color.colorTurquoise,
     flex: 1,
     width: "100%",
+<<<<<<< Updated upstream
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
+=======
+>>>>>>> Stashed changes
     height: 808,
     overflow: "hidden",
   },
 });
+<<<<<<< Updated upstream
 const formatSunsetTime = (timestamp) => {
   const date = new Date(timestamp * 1000);
   const hours = date.getHours();
@@ -268,3 +374,7 @@ const convertToFahrenheit = (temperature) => {
   return (temperature * 9/5) + 32;
 };
 export default Sunny;
+=======
+
+export default Sunny;
+>>>>>>> Stashed changes
