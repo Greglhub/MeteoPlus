@@ -10,7 +10,9 @@ const HomeScreen = () => {
   const [loading, setLoading] = useState(false);
   const [data, setData] = useState(null);
   const [temperatureCelsius, setTemperatureCelsius] = useState(null);
+  const [temperatureFahrenheit, setTemperatureFahrenheit] = useState(null);
   const [weatherIcon, setWeatherIcon] = useState(null);
+  const [isCelsius, setIsCelsius] = useState(true); // Ajout de l'état pour suivre l'unité
 
   const api = {
     key: "94f573feef288410e3e62deac7659349",
@@ -32,6 +34,10 @@ const HomeScreen = () => {
         const tempCelsius = res.data?.main?.temp - 273.15;
         setTemperatureCelsius(tempCelsius);
 
+        // Convertir la température de Celsius à Fahrenheit
+        const tempFahrenheit = tempCelsius * (9 / 5) + 32;
+        setTemperatureFahrenheit(tempFahrenheit);
+
         // Déterminer l'icône en fonction de la météo
         const weatherId = res.data?.weather[0]?.id;
         setWeatherIcon(getWeatherIcon(weatherId));
@@ -45,38 +51,35 @@ const HomeScreen = () => {
       .finally(() => setLoading(false));
   }, [api.key, input]);
 
-  // Fonction pour déterminer l'icône en fonction de l'ID de la météo
   const getWeatherIcon = (weatherId) => {
-    // Ajoutez ici vos conditions pour déterminer l'icône en fonction de l'ID de la météo
     if (weatherId >= 200 && weatherId < 300) {
-      return require('../../assets/pluie.png'); // Exemple d'icône pour les orages
+      return require('../../assets/orage.png'); // Orages
     } else if (weatherId >= 300 && weatherId < 500) {
-      return require('../../assets/pluie.png'); // Exemple d'icône pour la bruine
+      return require('../../assets/pluie.png'); // Bruine
     } else if (weatherId >= 500 && weatherId < 600) {
-      return require('../../assets/pluie.png'); // Exemple d'icône pour la pluie
+      return require('../../assets/pluvieux.png'); // Pluie
     } else if (weatherId >= 600 && weatherId < 700) {
-      return require('../../assets/pluie.png'); // Exemple d'icône pour la neige
-    } else if (weatherId >= 700 && weatherId < 800) {
-      return require('../../assets/pluie.png'); // Exemple d'icône pour les conditions atmosphériques
+      return require('../../assets/neige.png'); // Neige
     } else if (weatherId === 800) {
-      return require('../../assets/pluie.png'); // Exemple d'icône pour le ciel dégagé
-    } else if (weatherId > 800 && weatherId < 900) {
-      return require('../../assets/soleil.png'); // Exemple d'icône pour les nuages
+      return require('../../assets/soleil.png'); // Ciel dégagé
+    } else if (weatherId > 800 && weatherId < 801) {
+      return require('../../assets/soleilNuage.png'); // Ciel dégagé avec quelques nuages
+    } else if (weatherId >= 801 && weatherId < 805) {
+      return require('../../assets/nuageux.png'); // Nuageux
+    } else if (weatherId >= 701 && weatherId < 781) {
+      return require('../../assets/brouillard.png'); // Brouillard
     } else {
-      return require('../../assets/pluie.png'); // Icône par défaut pour les autres cas
+      return require('../../assets/alerte.png'); // Icône par défaut pour les autres cas
     }
-  };
+  };  
 
-  // Charger les données sauvegardées lors du montage initial du composant
   useEffect(() => {
     loadSavedData();
   }, []);
 
   const saveData = async (data) => {
     try {
-      // Convertir l'objet de données en chaîne JSON
       const dataString = JSON.stringify(data);
-      // Sauvegarder la chaîne JSON dans AsyncStorage
       await AsyncStorage.setItem("savedData", dataString);
     } catch (e) {
       console.error("Error saving data:", e);
@@ -85,15 +88,18 @@ const HomeScreen = () => {
 
   const loadSavedData = async () => {
     try {
-      // Charger la chaîne JSON du stockage local
       const savedDataString = await AsyncStorage.getItem("savedData");
       if (savedDataString) {
-        // Convertir la chaîne JSON en objet
         const savedData = JSON.parse(savedDataString);
         setData(savedData);
+
         // Convertir la température de Kelvin à Celsius
         const tempCelsius = savedData?.main?.temp - 273.15;
         setTemperatureCelsius(tempCelsius);
+
+        // Convertir la température de Celsius à Fahrenheit
+        const tempFahrenheit = tempCelsius * (9 / 5) + 32;
+        setTemperatureFahrenheit(tempFahrenheit);
 
         // Déterminer l'icône en fonction de la météo
         const weatherId = savedData?.weather[0]?.id;
@@ -102,6 +108,10 @@ const HomeScreen = () => {
     } catch (e) {
       console.error("Error loading saved data:", e);
     }
+  };
+
+  const toggleTemperatureUnit = () => {
+    setIsCelsius((prevIsCelsius) => !prevIsCelsius);
   };
 
   return (
@@ -115,7 +125,7 @@ const HomeScreen = () => {
           placeholderTextColor={"#000"}
           onSubmitEditing={fetchDataHandler}
         />
-        <Button title="Rechercher" onPress={fetchDataHandler} />
+        <Button title="Rechercher" onPress={fetchDataHandler} style={styles.btn} />
       </View>
       {loading && (
         <View>
@@ -123,21 +133,19 @@ const HomeScreen = () => {
         </View>
       )}
       {data && (
-        <View>
-          <Image source={getWeatherIcon(data?.weather[0]?.id)} style={styles.weatherIcon} />
+        <View style={styles.centeredContent}>
           {weatherIcon && <Image source={weatherIcon} style={styles.weatherIcon} />}
           <Text style={styles.headerText}>
             Ville {`${data?.name}, ${data?.sys?.country}`}
           </Text>
-          <Text style={styles.headerText}>{`${Math.round(
-            temperatureCelsius
-          )} °C`}</Text>
-         
+          {isCelsius ? (
+            <Text style={styles.temperature}>{`${Math.round(temperatureCelsius)} °C`}</Text>
+          ) : (
+            <Text style={styles.temperature}>{`${Math.round(temperatureFahrenheit)} °F`}</Text>
+          )}
 
           {data && (
             <View style={styles.meteocard}>
-
-             
               <Text style={styles.meteodate}>
                 Time{" "}
                 {new Date().toLocaleTimeString([], {
@@ -145,19 +153,29 @@ const HomeScreen = () => {
                   minute: "2-digit",
                 })}
               </Text>
-              <Text style={styles.headerText}>
-                Température {`${Math.round(temperatureCelsius)} °C`}
-              </Text>
+              {isCelsius ? (
+                <Text style={styles.temperature}>{`Température ${Math.round(
+                  temperatureCelsius
+                )} °C`}</Text>
+              ) : (
+                <Text style={styles.temperature}>{`Température ${Math.round(
+                  temperatureFahrenheit
+                )} °F`}</Text>
+              )}
               <Text style={styles.humidity}>
                 Humidité {data?.main?.humidity}%
               </Text>
-              {/* <Text style={styles.minmax}>
-                 {`Min ${Math.round(data?.main?.temp_min)} °C / Max ${Math.round(data?.main?.temp_max)} °C`}
-               </Text> */}
             </View>
           )}
         </View>
       )}
+      <View>
+        <Button
+          style={styles.btn}
+          title={`Basculer en dégres ${isCelsius ? "Fahrenheit" : "Celsius"}`}
+          onPress={toggleTemperatureUnit}
+        />
+      </View>
     </View>
   );
 };

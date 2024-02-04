@@ -1,11 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, AsyncStorage } from 'react-native';
-import { useRoute } from '@react-navigation/native';
+import { View, Text, FlatList, AsyncStorage } from 'react-native';
 
-const FavoritesAddedScreen = () => {
+const FavoritesAddedScreen = ({ favorites }) => {
   const [addedCities, setAddedCities] = useState([]);
-  const route = useRoute();
-  const { city } = route.params;
 
   useEffect(() => {
     // Charger les villes ajoutées depuis AsyncStorage lors du montage initial du composant
@@ -23,22 +20,35 @@ const FavoritesAddedScreen = () => {
     loadAddedCities();
   }, []);
 
+  // Mettre à jour les favoris dans AsyncStorage lorsque la prop favorites change
   useEffect(() => {
-    // Ajouter la ville à la liste des villes ajoutées
-    setAddedCities([...addedCities, city]);
+    const saveAddedCities = async () => {
+      try {
+        await AsyncStorage.setItem('addedCities', JSON.stringify(favorites));
+        setAddedCities(favorites);
+      } catch (error) {
+        console.error('Error saving added cities:', error);
+      }
+    };
 
-    // Enregistrer les villes ajoutées dans AsyncStorage
-    AsyncStorage.setItem('addedCities', JSON.stringify([...addedCities, city]));
-  }, [city, addedCities]);
+    saveAddedCities();
+  }, [favorites]);
 
   return (
     <View>
-      <Text>Ville ajoutée aux favoris :</Text>
-      <Text>{city}</Text>
-      <Text>Villes ajoutées précédemment :</Text>
-      {addedCities.map((addedCity) => (
-        <Text key={addedCity}>{addedCity}</Text>
-      ))}
+      <Text>Villes ajoutées :</Text>
+      {addedCities.length > 0 && (
+        <FlatList
+          data={addedCities}
+          keyExtractor={(item) => item}
+          renderItem={({ item }) => (
+            <View>
+              <Text>{item}</Text>
+              {/* Ajoutez ici tout autre rendu ou action nécessaire pour chaque ville ajoutée */}
+            </View>
+          )}
+        />
+      )}
     </View>
   );
 };
