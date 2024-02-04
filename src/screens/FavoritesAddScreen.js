@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, TextInput, Button, FlatList, Text, AsyncStorage } from 'react-native';
+import { View, TextInput, TouchableOpacity, FlatList, Text, AsyncStorage } from 'react-native';
 import axios from 'axios';
 import { useNavigation } from '@react-navigation/native';
 import styles from './FaddStyle';
@@ -85,7 +85,12 @@ const FavoritesAddScreen = () => {
         value={city}
         onChangeText={(text) => setCity(text)}
       />
-      <Button title="Ajouter aux favoris" onPress={() => handleAddToFavorites(city)} />
+      <TouchableOpacity
+        style={styles.addToFavoritesButton}
+        onPress={() => handleAddToFavorites(city)}
+      >
+        <Text style={styles.addToFavoritesButtonText}>Ajouter aux favoris</Text>
+      </TouchableOpacity>
       {searchResults.length > 0 && (
         <FlatList
           data={searchResults}
@@ -95,19 +100,26 @@ const FavoritesAddScreen = () => {
               <Text onPress={() => handleAddToFavorites(item.properties.city)}>
                 {item.properties.city}
               </Text>
-              <Button
-                title="Supprimer des favoris"
+              <TouchableOpacity
+                style={styles.addToFavoritesButton}
                 onPress={() => handleRemoveFromFavorites(item.properties.city)}
-              />
+              >
+                <Text style={styles.addToFavoritesButtonText}>Supprimer des favoris</Text>
+              </TouchableOpacity>
             </View>
           )}
         />
       )}
-      <Text>Favoris :</Text>
+      <Text style={styles.favorisTitle}>Favoris :</Text>
       {favorites.map((fav) => (
         <View key={fav}>
           <Text>{fav}</Text>
-          <Button title="Supprimer des favoris" onPress={() => handleRemoveFromFavorites(fav)} />
+          <TouchableOpacity
+            style={styles.addToFavoritesButton}
+            onPress={() => handleRemoveFromFavorites(fav)}
+          >
+            <Text style={styles.addToFavoritesButtonText}>Supprimer des favoris</Text>
+          </TouchableOpacity>
         </View>
       ))}
     </View>

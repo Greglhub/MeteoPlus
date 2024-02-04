@@ -1,4 +1,7 @@
 import { StyleSheet } from "react-native";
+import { Dimensions } from 'react-native';
+
+const { width, height } = Dimensions.get('window');
 
 const styles = StyleSheet.create({
 
@@ -19,7 +22,7 @@ const styles = StyleSheet.create({
         paddingVertical: 20, 
         marginVertical: 100,
         marginHorizontal: 10,
-        height: 40,
+        height: "27%",
         width: '80%',
         borderColor: 'gray',
         borderWidth: 1,
@@ -30,7 +33,7 @@ const styles = StyleSheet.create({
       },
 
       headerText: {
-        fontSize: 20,
+        fontSize: width * 0.05,
         fontWeight: 'bold',
         textAlign: 'center',
       },
@@ -47,22 +50,30 @@ const styles = StyleSheet.create({
         elevation: 5,
       },
       meteotext: {
-        fontSize: 20,
+        fontSize: 15,
         fontWeight: 'bold',
         textAlign: 'center',
       },
-
       meteodate: {
-        fontSize: 20,
+        fontSize: width * 0.035,
         fontWeight: 'bold',
         textAlign: 'center',
+        margin:10
       },
       humidity : {
-        fontSize: 20,
+        fontSize: width * 0.035,
         fontWeight: 'bold',
-        textAlign: 'center',
+        textAlign: 'center',  
+        margin:15
+      },
+      temperature: {  
+        fontSize: width * 0.04,
+        fontWeight: 'bold',
+        textAlign: 'center',  
       }
-})
+
+      }
+)
 
 
 export default styles

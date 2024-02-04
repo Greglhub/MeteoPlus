@@ -1,30 +1,41 @@
-import { StyleSheet } from "react-native";
+import { StyleSheet } from 'react-native';
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    // justifyContent: 'center',
-    // alignItems: 'center',
     backgroundColor: '#00d4ff',
-  }, 
-    favoris: {
-        borderBottomColor: '#df8e00',
-        borderBottomWidth: 3, 
-        fontSize: 19,
-        padding: 5,
-        paddingVertical: 20, 
-        marginVertical: 100,
-        marginHorizontal: 10,
-        height: 40,
-        width: '80%',
-        borderColor: 'gray',
-        borderWidth: 1,
-        padding: 10,
-        marginBottom: 10,
-        backgroundColor: '#fff',  
-        borderRadius: 10,
-      },
-})
+    alignItems: 'center', // Center content horizontally
+    justifyContent: 'center', // Center content vertically
+  },
+  favoris: {
+    borderBottomColor: '#df8e00',
+    borderBottomWidth: 3,
+    fontSize: 19,
+    padding: 5,
+    marginVertical: 20,
+    marginHorizontal: 10,
+    width: '80%',
+    borderColor: 'gray',
+    borderWidth: 1,
+    padding: 10,
+    marginBottom: 10,
+    backgroundColor: '#fff',
+    borderRadius: 10,
+  },
+  addToFavoritesButton: {
+    backgroundColor: 'green',
+    marginTop: 10,
+    padding: 10,
+    borderRadius: 5,
+    width: '80%', // Set the width to 80%
+  },
+  favorisTitle: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    color: 'red',
+    marginTop: 10,
+  },
+  
+});
 
-
-export default  styles
+export default styles;
