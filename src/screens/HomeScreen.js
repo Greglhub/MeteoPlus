@@ -71,8 +71,7 @@ const HomeScreen = () => {
     } else {
       return require('../../assets/alerte.png'); // Icône par défaut pour les autres cas
     }
-  };
-  
+  };  
 
   useEffect(() => {
     loadSavedData();
@@ -159,7 +158,7 @@ const HomeScreen = () => {
                   temperatureCelsius
                 )} °C`}</Text>
               ) : (
-                <Text style={styles.headerText}>{`Température ${Math.round(
+                <Text style={styles.temperature}>{`Température ${Math.round(
                   temperatureFahrenheit
                 )} °F`}</Text>
               )}
