@@ -100,12 +100,6 @@ const FavoritesAddScreen = () => {
               <Text onPress={() => handleAddToFavorites(item.properties.city)}>
                 {item.properties.city}
               </Text>
-              <TouchableOpacity
-                style={styles.addToFavoritesButton}
-                onPress={() => handleRemoveFromFavorites(item.properties.city)}
-              >
-                <Text style={styles.addToFavoritesButtonText}>Supprimer des favoris</Text>
-              </TouchableOpacity>
             </View>
           )}
         />
@@ -115,10 +109,10 @@ const FavoritesAddScreen = () => {
         <View key={fav}>
           <Text>{fav}</Text>
           <TouchableOpacity
-            style={styles.addToFavoritesButton}
+            
             onPress={() => handleRemoveFromFavorites(fav)}
           >
-            <Text style={styles.addToFavoritesButtonText}>Supprimer des favoris</Text>
+            <Text style={styles.SuppToFavoritesButton}>Supprimer des favoris</Text>
           </TouchableOpacity>
         </View>
       ))}

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, AsyncStorage } from 'react-native';
+import { View, Text, AsyncStorage, ScrollView } from 'react-native';  // Added ScrollView for scrolling if needed
 import { useRoute } from '@react-navigation/native';
 
 const FavoritesAddedScreen = () => {
@@ -21,25 +21,27 @@ const FavoritesAddedScreen = () => {
     };
 
     loadAddedCities();
-  }, []);
+  }, []);  // Removed dependency array to only run on mount
 
   useEffect(() => {
     // Ajouter la ville à la liste des villes ajoutées
-    setAddedCities([...addedCities, city]);
+    setAddedCities((prevCities) => [...prevCities, city]);
 
     // Enregistrer les villes ajoutées dans AsyncStorage
     AsyncStorage.setItem('addedCities', JSON.stringify([...addedCities, city]));
-  }, [city, addedCities]);
+  }, [city]);  // Added city to the dependency array
 
   return (
-    <View>
-      <Text>Ville ajoutée aux favoris :</Text>
-      <Text>{city}</Text>
-      <Text>Villes ajoutées précédemment :</Text>
-      {addedCities.map((addedCity) => (
-        <Text key={addedCity}>{addedCity}</Text>
-      ))}
-    </View>
+    <ScrollView>
+      <View>
+        <Text>Ville ajoutée aux favoris :</Text>
+        <Text>{city}</Text>
+        <Text>Villes ajoutées précédemment :</Text>
+        {addedCities.map((addedCity) => (
+          <Text key={addedCity}>{addedCity}</Text>
+        ))}
+      </View>
+    </ScrollView>
   );
 };
 

@@ -27,7 +27,14 @@ const styles = StyleSheet.create({
     marginTop: 10,
     padding: 10,
     borderRadius: 5,
-    width: '80%', // Set the width to 80%
+    width: '40%', 
+  },
+  SuppToFavoritesButton: {
+    backgroundColor: 'red',
+    marginTop: 10,
+    padding: 10,
+    borderRadius: 5,
+    width: '100%', // Set the width to 80%
   },
   favorisTitle: {
     fontSize: 18,
