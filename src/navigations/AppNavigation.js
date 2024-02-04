@@ -12,7 +12,7 @@ const AppNavigation = () => {
   return (
     <NavigationContainer>
       <Tab.Navigator>
-        <Tab.Screen name="Home" component={HomeScreen} />
+        <Tab.Screen name="Home" options={{ headerShown: false }} component={HomeScreen} />
         <Tab.Screen name="FavoritesAdd" options={{ headerShown: false }} component={FavoritesAddScreen} />
         <Tab.Screen name="FavoritesAdded" component={FavoritesAddedScreen} />
       </Tab.Navigator>
