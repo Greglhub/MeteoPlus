@@ -14,6 +14,7 @@ const FavoritesAddScreen = () => {
   const [favorites, setFavorites] = useState([]);
   const [searchResults, setSearchResults] = useState([]);
   const [currentWeather, setCurrentWeather] = useState(null);
+  const [highlightColor, setHighlightColor] = useState(null);
 
   const saveAutocompleteResults = async (results) => {
     try {
@@ -62,33 +63,38 @@ const FavoritesAddScreen = () => {
 
   const handleAddToFavorites = async (selectedCity) => {
     try {
-      // Vérifier si la ville sélectionnée n'est pas vide
       if (selectedCity.trim() === "") {
         console.warn("Nom de la ville vide. La ville n'a pas été ajoutée aux favoris.");
         return;
       }
-  
-      // Vérifier si la ville sélectionnée est présente dans les résultats de l'autocomplétion
+
       const isCityInAutocompleteResults = searchResults.some((result) => result.properties.city === selectedCity);
       if (!isCityInAutocompleteResults) {
         console.warn("La ville sélectionnée n'est pas dans les résultats de l'autocomplétion. La ville n'a pas été ajoutée aux favoris.");
         return;
       }
-  
+
       const isCityInFavorites = favorites.some((fav) => fav === selectedCity);
       if (!isCityInFavorites) {
         const updatedFavorites = [...favorites, selectedCity];
         setFavorites(updatedFavorites);
         await saveFavorites(updatedFavorites);
+
+        // Mettre à jour la couleur de surbrillance
+        setHighlightColor('#00FF00'); // Utilisez la couleur que vous souhaitez
+
         // Effacer les résultats de l'autocomplétion après l'ajout aux favoris
         clearAutocompleteResults();
+
+        // Réinitialiser la couleur de surbrillance après 3 secondes
+        setTimeout(() => {
+          setHighlightColor(null);
+        }, 3000);
       }
     } catch (error) {
       console.error('Error adding city to favorites:', error);
     }
   };
-  
-  
 
   const handleRemoveFromFavorites = async (selectedCity) => {
     try {
@@ -173,10 +179,12 @@ const FavoritesAddScreen = () => {
           )}
 
           {currentWeather && (
-            <View style={styles.favoriscardItem}>
+            <View style={[styles.favoriscardItem, { backgroundColor: highlightColor }]}>
               <Text>{currentWeather.name}</Text>
               <Text>Temperature: {currentWeather.main.temp} °C</Text>
-              <Text>Humidity: {currentWeather.main.humidity}%</Text>
+              <Text>Humidité: {currentWeather.main.humidity}%</Text>
+              {/* Utilisez les données de l'API OpenWeatherMap pour afficher d'autres informations si nécessaire */}
+              
               <Button
                 title="Supprimer des favoris"
                 onPress={() => handleRemoveFromFavorites(currentWeather.name)}
@@ -188,17 +196,17 @@ const FavoritesAddScreen = () => {
           {favorites.map((fav) => (
             <View key={fav} style={styles.favoriscardItem}>
               <Text style={styles.favorisText}>{fav}</Text>
-              <Button
-                title="Supprimer des favoris"
-                onPress={() => handleRemoveFromFavorites(fav)}
-                color={styles.favorisButton.color}
-              />
+              
             </View>
-          ))}
-        </View>
-      </View>
-    </TouchableWithoutFeedback>
-  );
-};
-
-export default FavoritesAddScreen;
+           ))}
+           </View>
+         </View>
+       </TouchableWithoutFeedback>
+     );
+   };
+   
+   
+   
+   
+   
+   export default FavoritesAddScreen;

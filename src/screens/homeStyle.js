@@ -9,8 +9,9 @@ const styles = StyleSheet.create({
     backgroundColor: '#00d4ff',
   },
   weatherIcon: {
-    width: 50, 
-    height: 50, 
+    top:-100,
+    width: 150, 
+    height: 150, 
     alignItems: 'center'
   },
   searchInput: {
@@ -29,6 +30,7 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     backgroundColor: '#fff',  
     borderRadius: 10,
+    left:30
   },
   headerText: {
     fontSize: width * 0.05,
@@ -75,6 +77,7 @@ const styles = StyleSheet.create({
     padding: 10,
     borderRadius: 5,
     marginTop: 10,
+    
   },
   centeredContent: {
     flex: 1,

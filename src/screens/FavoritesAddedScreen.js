@@ -1,9 +1,10 @@
-// FavoritesListScreen.js
+// FavoritesAddedScreen.js
+
 import React, { useState, useEffect } from 'react';
 import { View, Text, FlatList, TouchableOpacity } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useNavigation } from '@react-navigation/native';
-import styles from './FaddedStyle'; // Assurez-vous d'importer les styles appropriés
+import styles from './FaddedStyle';
 
 const FavoritesAddedScreen = () => {
   const [favoriteCities, setFavoriteCities] = useState([]);
@@ -23,26 +24,38 @@ const FavoritesAddedScreen = () => {
 
   useEffect(() => {
     const unsubscribe = navigation.addListener('focus', () => {
-      // Chargement des villes favorites à chaque fois que la page reçoit le focus
       loadFavoriteCities();
     });
 
-    // Nettoyage de l'écouteur lorsque le composant est démonté
     return unsubscribe;
   }, [navigation]);
 
+  const removeCityFromFavorites = async (selectedCity) => {
+    try {
+      const updatedFavorites = favoriteCities.filter((fav) => fav !== selectedCity);
+      setFavoriteCities(updatedFavorites);
+      await AsyncStorage.setItem('favorites', JSON.stringify(updatedFavorites));
+    } catch (error) {
+      console.error('Error removing city from favorites:', error);
+    }
+  };
+
+  const renderItem = ({ item }) => (
+    <View style={[styles.favoriteCityItem, styles.addBg]}>
+      <Text style={[styles.favoriteCityText, styles.fTypo]}>{item}</Text>
+      <TouchableOpacity onPress={() => removeCityFromFavorites(item)}>
+        <Text style={styles.removeCityButton}>Supprimer</Text>
+      </TouchableOpacity>
+    </View>
+  );
+
   return (
     <View style={styles.container}>
-      <Text style={styles.heading}> Favorites</Text>
+      <Text style={styles.heading}>Favorites</Text>
       <FlatList
         data={favoriteCities}
         keyExtractor={(item) => item}
-        renderItem={({ item }) => (
-          <View style={styles.favoriteCityItem}>
-            <Text style={styles.favoriteCityText}>{item}</Text>
-            {/* Ajoutez ici d'autres éléments que vous souhaitez afficher pour chaque ville favorite */}
-          </View>
-        )}
+        renderItem={renderItem}
       />
     </View>
   );
