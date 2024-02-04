@@ -30,7 +30,7 @@ const AppNavigation = () => {
         })}
       >
         <Tab.Screen name="Home" options={{ headerShown: false }} component={HomeScreen} />
-        <Tab.Screen name="FavoritesAdd" options={{ headerShown: false }} component={FavoritesAddScreen} />
+        <Tab.Screen name="FavoritesAdd"  component={FavoritesAddScreen} />
         <Tab.Screen name="FavoritesAdded" component={FavoritesAddedScreen} />
       </Tab.Navigator>
     </NavigationContainer>
